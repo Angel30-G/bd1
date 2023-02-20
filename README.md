@@ -1,2 +1,2 @@
-Angel Gabriel Vargas Varela
-2021080292
+Nombre: Angel Gabriel Vargas Varela
+Carnet: 2021080292

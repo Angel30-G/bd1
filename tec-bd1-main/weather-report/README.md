@@ -1,7 +1,0 @@
-Weather Report
-==============
-
-Nombre:
-Carnet:
-
-

@@ -1,5 +1,6 @@
-package tec.bd.weather.service;
+package tec.bd.openweather;
 
+import tec.bd.openweather.OpenWeatherReport;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;

@@ -1,8 +1,9 @@
-package tec.bd.weather.service;
+package tec.bd.openweather;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
+import tec.bd.weather.Report;
 
 public class OpenWeatherReport {
 
@@ -266,6 +267,10 @@ public class OpenWeatherReport {
                     ", tempMax=" + tempMax +
                     ", tempMin=" + tempMin +
                     '}';
+        }
+
+        Report getReport() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         }
     }
 

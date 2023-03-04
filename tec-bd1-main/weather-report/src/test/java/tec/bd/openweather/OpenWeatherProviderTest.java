@@ -1,21 +1,24 @@
-package tec.bd.weather.service;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package tec.bd.openweather;
 
-import tec.bd.openweather.OpenWeatherService;
-import tec.bd.openweather.OpenWeatherResource;
 import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
 
-public class OpenWeatherServiceTest {
+public class OpenWeatherProviderTest {
 
     @Test
-    public void GivenZipCode_WhenOpenWeatherRemoteCall_ThenGetTemperature() throws Exception {
+    public void GivenZipCode_WhenOpenWeatherRemoteCall_ThenGetReport() throws Exception {
         MockWebServer server = new MockWebServer();
         server.enqueue(new MockResponse().setBody("{" +
                 "    \"base\": \"stations\"," +
@@ -67,17 +70,22 @@ public class OpenWeatherServiceTest {
         HttpUrl baseUrl = server.url("/data/2.5/weather/");
 
         OpenWeatherResource openWeatherResource = createResource(baseUrl);
+        OpenWeatherAPIKeyProvider openWeatherAPIKeyProvider = mock(OpenWeatherAPIKeyProvider.class);
 
-        var openWeatherService = new OpenWeatherService(openWeatherResource);
+        given(openWeatherAPIKeyProvider.getAPIKey()).willReturn("the-api-key");
 
-        var actual = openWeatherService.getTemperature(90210);
+        var openWeatherService = new OpenWeatherProvider(openWeatherResource, openWeatherAPIKeyProvider);
+
+        var actual = openWeatherService.getByZipCode("90210");
 
         assertThat(actual).isNotNull();
 
         RecordedRequest request1 = server.takeRequest();
 
         assertThat(request1.getPath()).containsOnlyOnce("zip=90210");
-        //assertThat(request1.getPath()).containsOnlyOnce("appId=test-api-key");
+        assertThat(request1.getPath()).containsOnlyOnce("appId=the-api-key");
+
+        verify(openWeatherAPIKeyProvider, times(1)).getAPIKey();
 
         server.shutdown();
     }
@@ -90,4 +98,6 @@ public class OpenWeatherServiceTest {
 
         return retrofit.create(OpenWeatherResource.class);
     }
+
 }
+

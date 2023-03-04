@@ -1,9 +1,12 @@
-package tec.bd.weather.service;
+package tec.bd.openweather;
 
+import tec.bd.openweather.OpenWeatherResource;
+import tec.bd.openweather.OpenWeatherReport;
 import retrofit2.Call;
 
 import java.util.Map;
 import tec.bd.weather.Report;
+import tec.bd.weather.service.WeatherService;
 
 public class OpenWeatherService implements WeatherService {
 
@@ -31,8 +34,13 @@ public class OpenWeatherService implements WeatherService {
         return Map.of("zip", zipCode, "appId", API_KEY);
     }
 
+    /**
+     *
+     * @param zipCode
+     * @return
+     */
     @Override
-    public Report ByZipCode(int zipCode) {
+    public Report getByZipCode(String zipCode) {
         try {
             var options = queryStringZipOptions(String.valueOf(zipCode));
             Call<OpenWeatherReport> openWeatherReportCall = this.openWeatherResource.get(options);
@@ -52,8 +60,12 @@ public class OpenWeatherService implements WeatherService {
         return Map.of("City", city, "appId", API_KEY);
     }
     
+   /* public Report getByZipCode(String zipCode) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }*/
+
     @Override
-    public Report ByCity(String city) {
+    public Report getByCity(String city) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

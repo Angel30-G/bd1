@@ -2,6 +2,7 @@ package tec.bd.weather.storage;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,24 +46,24 @@ public class InMemoryWeatherReportStorage implements WeatherReportStorage {
 
     @Override
     public Report find(int reportKey) {
+        Report key = this.db.get(reportKey);
         //String key = null;
         //this.db = new LinkedHashMap<>(reportKey);
         //List<Report> find(String zipCode);
         //return db.find(key, reportKey);
-
-        db.get(reportKey);
-        return null;
+        return key;
         
     }
-
+    
     @Override
     public List<Report> find(String zipCode) {
-        this.db = new LinkedHashMap<>();
-        return null;
+        return new ArrayList<>(savedReports.values());
     }
+
 
     private String generateKeyFromReport(Report report) {
         var dateFormat = new SimpleDateFormat("dd-MM-YYYY");
         return (dateFormat.format(report.getDate()) + "-" + report.getReportType() + "-" + report.getLocation());
     }
+
 }

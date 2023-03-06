@@ -72,6 +72,11 @@ public class OpenWeatherProvider implements WeatherService {
     private Map<String, String> queryStringZipOptions(String zipCode) {
         return Map.of("zip", zipCode, "appId", this.openWeatherAPIKeyProvider.getAPIKey());
     }
+
+    @Override
+    public float getTemperature(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 
 }

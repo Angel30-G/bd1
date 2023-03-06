@@ -14,7 +14,7 @@ public class WeatherReportTest {
         var openWeatherService = mock(WeatherService.class);
         var weatherReport = new WeatherReport(openWeatherService);
         try {
-            weatherReport.getByZipCode("the-api-key");
+            weatherReport.getByZipCode(-1);
             fail("Negative values are not allowed");
         } catch (IllegalArgumentException e) {
             assertThat(true).isTrue();
@@ -27,7 +27,7 @@ public class WeatherReportTest {
         var openWeatherService = mock(WeatherService.class);
         var weatherReport = new WeatherReport(openWeatherService);
         try {
-            weatherReport.getByZipCode("90210");
+            weatherReport.getByZipCode(1_000_000);
             fail("Zip code value is not allowed");
         } catch (IllegalArgumentException e) {
             assertThat(true).isTrue();
@@ -35,7 +35,7 @@ public class WeatherReportTest {
         // c559e941a0da745aa0139aef272bf16c
     }
 
-  /*  @Test
+  /* @Test
     public void GivenZipCode_WhenWeatherReportRequested_ThenReturnReport() {
 
         var openWeatherService = mock(WeatherService.class);

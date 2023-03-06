@@ -8,4 +8,8 @@ public interface WeatherService{
 
     Report getByCity(String city);
    // public Report ByTemperature(int temperature);
+
+    public float getTemperature(int i);
+
+    //public void getTemperature(int i);
 }

@@ -43,7 +43,7 @@ public class WeatherServiceImplTest {
 
         var service = new WeatherServiceImpl(remoteWeatherProvider, weatherReportStorage);
 
-        var actual = service.getByZipCode("90210");
+        Report actual = service.getByZipCode("90210");
 
         verify(weatherReportStorage, times(1)).find(anyString());
         verify(remoteWeatherProvider, never()).getByZipCode("90210");

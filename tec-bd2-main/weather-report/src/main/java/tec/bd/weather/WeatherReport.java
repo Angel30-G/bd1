@@ -32,4 +32,10 @@ public class WeatherReport {
         return this.openWeatherService.getByCity(city);
         
     }
+
+    void getByZipCode(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+ 
 }

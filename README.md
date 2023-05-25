@@ -12,7 +12,7 @@ Nota 7
 
 ### Tarea 2
 
-Nota 10
+Nota 9 
 
 ### Tarea 3
 

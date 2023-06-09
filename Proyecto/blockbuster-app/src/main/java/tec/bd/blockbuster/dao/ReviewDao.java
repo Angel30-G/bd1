@@ -8,22 +8,23 @@ package tec.bd.blockbuster.dao;
 import java.util.List;
 import java.util.Optional;
 import tec.bd.blockbuster.movie;
+import tec.bd.blockbuster.review;
 
-public interface ReviewDao extends GenericDao<movie, Long> {
+public interface ReviewDao extends GenericDao<review, Long> {
 
-    Optional<movie> findByTitle(String title);
+    Optional<review> findByTitle(String title);
     
     @Override
-    List<movie> findAll();
+    List<review> findAll();
 
     @Override
-    Optional<movie> findById(Long movieId);
+    Optional<review> findById(Long movieId);
 
     @Override
-    void save(movie movie);
+    void save(review review);
 
     @Override
-    Optional<movie> update(movie movie);
+    Optional<review> update(review review);
 
     @Override
     void delete(Long movieId);

@@ -7,6 +7,7 @@ package tec.bd;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import tec.bd.blockbuster.clients;
 import tec.bd.blockbuster.dao.CategoryDao;
 import tec.bd.blockbuster.dao.ClientDao;
 import tec.bd.blockbuster.dao.MovieDao;
@@ -24,47 +25,47 @@ public class BlockbusterClient {
      * Lista todas las peliculas
      * @return
      */
-    public List<movie> getAllMovies() {
+    public List<clients> getAllClient() {
         return this.clientDAO.findAll();
     }
 
     /**
      * Agrega una pelicula
-     * @param movie
+     * @param client
      */
-    public void addNewMovie(movie movie) {
-        this.clientDAO.save(movie);
+    public void addNewClient(clients client) {
+        this.clientDAO.save(client);
     }
 
     /**
      * Obtiene una pelicula por titulo
-     * @param movieName
+     * @param clientName
      * @return
      */
-    public movie getMovie(String movieName) {
-        return this.clientDAO.findByTitle(movieName).orElse(null);
+    public clients getClient(String clientName) {
+        return this.clientDAO.findByTitle(clientName).orElse(null);
     }
 
     /**
      * Obtiene una pelicula por movieId
-     * @param movieId
+     * @param clientId
      * @return
      */
-    public movie getMovie(long movieId) {
-        return this.clientDAO.findById(movieId).orElse(null);
+    public clients getClient(long clientId) {
+        return this.clientDAO.findById(clientId).orElse(null);
     }
 
-    public void editMovieTitle(String currentMovieName, String newMovieName) {
-        var movie = this.getMovie(currentMovieName);
-        movie.setTitulo(newMovieName);
+    public void editClientName(String currentClientName, String newClientName) {
+        var client = this.getClient(currentClientName);
+        client.setNombre(newClientName);
     }
 
     /**
      * Borra una pelicula
-     * @param movieId
+     * @param clientId
      */
-    public void remove(long movieId) {
-        this.clientDAO.delete(movieId);
+    public void remove(long clientId) {
+        this.clientDAO.delete(clientId);
     }
 
 }

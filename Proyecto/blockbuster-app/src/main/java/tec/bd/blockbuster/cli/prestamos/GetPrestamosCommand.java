@@ -10,36 +10,39 @@ import picocli.CommandLine.Command;
 import java.util.List;
 import tec.bd.Application;
 import tec.bd.Blockbuster;
+import tec.bd.BlockbusterClient;
+import tec.bd.BlockbusterRental;
 import tec.bd.blockbuster.movie;
+import tec.bd.blockbuster.rentals;
 
 @Command(name = "loanr", description = "Get All Rentals")
 public class GetPrestamosCommand implements Runnable {
 
     @Parameters(paramLabel = "<Rentals id>", description = "Id of Rentals", defaultValue = "0")
-    private long rentalsId;
+    private long rentalId;
 
     @Override
     public void run() {
 
-        System.out.println("rentalsId: " + rentalsId);
-        Blockbuster blockbuster = new Application().getBlockbuster();
+        System.out.println("rentalsId: " + rentalId);
+        BlockbusterRental blockbuster = new Application().getBlockbusterRental();
 
-        if (rentalsId != 0) {
+        if (rentalId != 0) {
             // La logica encontrar por movieId
             System.out.println("=== Get Rentals Id === ");
-            var movie = blockbuster.getMovie(rentalsId);
+            var rental = blockbuster.getRental(rentalId);
 
-            System.out.println("Date: "+ movie.getTitulo() + ", Id: " + movie.getId());
+            System.out.println("Date: "+ rental.getRental_date() + ", Id: " + rental.getId());
 
         } else {
 
             System.out.println("=== Get All Rentals === ");
 
-            List<movie> movies = blockbuster.getAllMovies();
+            List<rentals> rental = blockbuster.getAllRental();
 
             System.out.println("Codigo \t\t Date");
-            for (movie m : movies) {
-                System.out.println(m.getId() + "\t\t" + m.getTitulo());
+            for (rentals m : rental) {
+                System.out.println(m.getId() + "\t\t" + m.getRental_date());
             }
 
         }

@@ -7,23 +7,24 @@ package tec.bd.blockbuster.dao;
 
 import java.util.List;
 import java.util.Optional;
+import tec.bd.blockbuster.Category;
 import tec.bd.blockbuster.movie;
 
-public interface CategoryDao extends GenericDao<movie, Long> {
+public interface CategoryDao extends GenericDao<Category, Long> {
 
-    Optional<movie> findByTitle(String title);
+    Optional<Category> findByTitle(String title);
     
     @Override
-    List<movie> findAll();
+    List<Category> findAll();
 
     @Override
-    Optional<movie> findById(Long categoryId);
+    Optional<Category> findById(Long categoryId);
 
     @Override
-    void save(movie movie);
+    void save(Category category);
 
     @Override
-    Optional<movie> update(movie movie);
+    Optional<Category> update(Category category);
 
     @Override
     void delete(Long movieId);

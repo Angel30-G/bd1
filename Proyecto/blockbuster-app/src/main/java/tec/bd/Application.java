@@ -11,7 +11,14 @@ import tec.bd.blockbuster.dao.mysql.MovieDaoImpl;
 
 import javax.sql.DataSource;
 import tec.bd.blockbuster.dao.CategoryDao;
+import tec.bd.blockbuster.dao.ClientDao;
+import tec.bd.blockbuster.dao.PrestamoDao;
+import tec.bd.blockbuster.dao.ReviewDao;
 import tec.bd.blockbuster.dao.inMemoryList.InMemoryMovieListDB;
+import tec.bd.blockbuster.dao.mysql.CategoryDaoImpl;
+import tec.bd.blockbuster.dao.mysql.ClientDaoImpl;
+import tec.bd.blockbuster.dao.mysql.PrestamoDaoImpl;
+import tec.bd.blockbuster.dao.mysql.ReviewDaoImpl;
 
 public class Application {
 
@@ -19,8 +26,8 @@ public class Application {
     private Blockbuster blockbuster;
     private BlockbusterCategory blockbusterCategory;
     private BlockbusterClient blockbusterClient;
-    private BlockbusterClient blockbusterRental;
-    private BlockbusterClient blockbusterReview;
+    private BlockbusterRental blockbusterRental;
+    private BlockbusterReview blockbusterReview;
 
 
     public Application() {
@@ -28,13 +35,16 @@ public class Application {
         var hikariDataSource = initHikariDataSource();
         var mysqlMovies = initMysqlMovieDAO(hikariDataSource);
         var mysqlCategory = initMysqlCategoryDAO(hikariDataSource);
-        var mysqlClient = initMysqlCategoryDAO(hikariDataSource);
-        var mysqlPrestamo = initMysqlCategoryDAO(hikariDataSource);
-        var mysqlReview = initMysqlCategoryDAO(hikariDataSource);
+        var mysqlClient = initMysqlClientDAO(hikariDataSource);
+        var mysqlPrestamo = initMysqlPrestamoDAO(hikariDataSource);
+        var mysqlReview = initMysqlReviewDAO(hikariDataSource);
         var listMovies = initInMemoryListMovieDAO();
 
         this.blockbuster = initBlockbuster(mysqlMovies);
         this.blockbusterCategory = initBlockbusterCategory((CategoryDao) mysqlCategory);
+        this.blockbusterClient = initBlockbusterClient((ClientDao) mysqlClient);
+        this.blockbusterRental = initBlockbusterPrestamo((PrestamoDao) mysqlPrestamo);
+        this.blockbusterReview = initBlockbusterReview((ReviewDao) mysqlReview);
     }
 
 
@@ -62,13 +72,13 @@ public class Application {
     }
     
     //Datos de Categoria
-    public static MovieDao initMysqlCategoryDAO(DataSource dataSource) {
-        return new MovieDaoImpl(dataSource);
+    public static CategoryDaoImpl initMysqlCategoryDAO(DataSource dataSource) {
+        return new CategoryDaoImpl(dataSource);
     }
     
-     public static CategoryDao initInMemoryListCategoryDAO() {
+   /*  public static CategoryDao initInMemoryListCategoryDAO() {
         return (CategoryDao) new InMemoryMovieListDB();
-    }
+    }*/
 
     public static BlockbusterCategory initBlockbusterCategory(CategoryDao categoryDAO) {
         return new BlockbusterCategory(categoryDAO);
@@ -79,19 +89,53 @@ public class Application {
     }
     
     //Datos de Clientes
-      public static MovieDao initMysqlClientDAO(DataSource dataSource) {
-        return new MovieDaoImpl(dataSource);
+      public static ClientDaoImpl initMysqlClientDAO(DataSource dataSource) {
+        return new ClientDaoImpl(dataSource);
     }
     
-     public static CategoryDao initInMemoryListCategoryDAO() {
-        return (CategoryDao) new InMemoryMovieListDB();
+    /* public static ClientDao initInMemoryListClientDAO() {
+        return (ClientDao) new InMemoryMovieListDB();
+    }*/
+
+    public static BlockbusterClient initBlockbusterClient(ClientDao clientDAO) {
+        return new BlockbusterClient(clientDAO);
     }
 
-    public static BlockbusterCategory initBlockbusterCategory(CategoryDao categoryDAO) {
-        return new BlockbusterCategory(categoryDAO);
+    public BlockbusterClient getBlockbusterClient() {
+        return blockbusterClient;
+    }
+    
+    //Datos de Rentals
+     public static PrestamoDaoImpl initMysqlPrestamoDAO(DataSource dataSource) {
+        return new PrestamoDaoImpl(dataSource);
+    }
+    
+     /*public static PrestamoDao initInMemoryListPrestamoDAO() {
+        return (PrestamoDao) new InMemoryMovieListDB();
+    }*/
+
+    public static BlockbusterRental initBlockbusterPrestamo(PrestamoDao prestamoDAO) {
+        return new BlockbusterRental(prestamoDAO);
     }
 
-    public BlockbusterCategory getBlockbusterCategory() {
-        return blockbusterCategory;
+    public BlockbusterRental getBlockbusterRental() {
+        return blockbusterRental;
+    }
+    
+    //Datos de Review
+      public static ReviewDaoImpl initMysqlReviewDAO(DataSource dataSource) {
+        return new ReviewDaoImpl(dataSource);
+    }
+    
+    /* public static ReviewDao initInMemoryListReviewDAO() {
+        return (ReviewDao) new InMemoryMovieListDB();
+    }*/
+
+    public static BlockbusterReview initBlockbusterReview(ReviewDao reviewDAO) {
+        return new BlockbusterReview(reviewDAO);
+    }
+
+    public BlockbusterReview getBlockbusterReview() {
+        return blockbusterReview;
     }
 }

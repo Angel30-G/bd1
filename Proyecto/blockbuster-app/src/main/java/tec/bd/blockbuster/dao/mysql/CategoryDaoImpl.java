@@ -12,10 +12,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import tec.bd.blockbuster.Category;
+import tec.bd.blockbuster.dao.CategoryDao;
 import tec.bd.blockbuster.dao.MovieDao;
 import tec.bd.blockbuster.movie;
 
-public class CategoryDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements MovieDao {
+public class CategoryDaoImpl extends GenericMysqlDaoImpl<Category, Long> implements CategoryDao {
 
     private static final String SQL_FIND_ALL_CATEGORY = "select id, nombre, descripcion from category";
     private static final String SQL_FIND_BY_ID_CATEGORY = "select id, nombre, descripcion from category where id = ?";
@@ -31,8 +33,8 @@ public class CategoryDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements
     }
 
     @Override
-    public List<movie> findAll() {
-        List<movie> movies = new ArrayList<>();
+    public List<Category> findAll() {
+        List<Category> category = new ArrayList<>();
         Connection dbConnection = null;
         try {
             dbConnection = this.dataSource.getConnection();
@@ -47,11 +49,11 @@ public class CategoryDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements
                 throw new RuntimeException(sqlEx);
             }
         }
-        return movies;
+        return category;
     }
 
     @Override
-    public Optional<movie> findById(Long movieId) {
+    public Optional<Category> findById(Long categoryId) {
         Connection dbConnection = null;
         try {
             dbConnection = this.dataSource.getConnection();
@@ -73,7 +75,7 @@ public class CategoryDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements
     }
 
     @Override
-    public Optional<movie> findByTitle(String title) {
+    public Optional<Category> findByTitle(String title) {
         Connection dbConnection = null;
         try {
             dbConnection = this.dataSource.getConnection();
@@ -95,16 +97,17 @@ public class CategoryDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements
     }
 
     @Override
-    public void save(movie movie) {
+    public void save(Category category) {
         Connection dbConnection = null;
         try {
             dbConnection = this.dataSource.getConnection();
-            PreparedStatement insertMovie = dbConnection.prepareStatement(SQL_INSERT_CATEGORY);
-            insertMovie.setString(1, movie.getTitulo());
-            var releaseDate = new java.sql.Date(movie.getFecha_lanzamiento().getTime());
-            insertMovie.setDate(2, releaseDate);
+            PreparedStatement insertCategory = dbConnection.prepareStatement(SQL_INSERT_CATEGORY);
+            insertCategory.setString(1, category.getName());
+            insertCategory.setString(1, category.getDescription());
+            //var releaseDate = new java.sql.Date(movie.getFecha_lanzamiento.getTime());
+            //insertMovie.setDate(2, releaseDate);
             //insertMovie.setString(3, movie.getCategory());
-            insertMovie.executeUpdate();
+            insertCategory.executeUpdate();
         } catch (Exception e) {
             try {
                 dbConnection.rollback();
@@ -131,13 +134,13 @@ public class CategoryDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements
     }
 
     @Override
-    public Optional<movie> update(movie movie) {
+    public Optional<Category> update(Category category) {
         return null;
     }
 
     @Override
-    protected movie resultSetToEntity(ResultSet resultSet) throws SQLException {
-        var movieId = resultSet.getInt("Id");
+    protected Category resultSetToEntity(ResultSet resultSet) throws SQLException {
+        var categoryId = resultSet.getInt("Id");
         var nombre = resultSet.getString("nombre");
         var descripcion = resultSet.getDate("descripcion");
         //var movie = new movie(movieId, title, new Date(releaseDate.getTime()), category);
@@ -146,12 +149,12 @@ public class CategoryDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements
     }
 
     @Override
-    protected List<movie> resultSetToList(ResultSet resultSet) throws SQLException {
-        List<movie> movies = new ArrayList<>();
+    protected List<Category> resultSetToList(ResultSet resultSet) throws SQLException {
+        List<Category> category = new ArrayList<>();
         while(resultSet.next()) {
-            movies.add(resultSetToEntity(resultSet));
+            category.add(resultSetToEntity(resultSet));
         }
-        return movies;
+        return category;
     }
 
 

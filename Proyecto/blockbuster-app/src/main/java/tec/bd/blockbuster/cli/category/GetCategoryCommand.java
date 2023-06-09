@@ -10,6 +10,8 @@ import picocli.CommandLine.Command;
 import java.util.List;
 import tec.bd.Application;
 import tec.bd.Blockbuster;
+import tec.bd.BlockbusterCategory;
+import tec.bd.blockbuster.Category;
 import tec.bd.blockbuster.movie;
 
 @Command(name = "catr", description = "Get All Categories")
@@ -22,24 +24,24 @@ public class GetCategoryCommand implements Runnable {
     public void run() {
 
         System.out.println("categoryId: " + categoryId);
-        Blockbuster blockbuster = new Application().getBlockbuster();
+        BlockbusterCategory blockbusterCategory = new Application().getBlockbusterCategory();
 
         if (categoryId != 0) {
             // La logica encontrar por movieId
             System.out.println("=== Get Category Id === ");
-            var movie = blockbuster.getMovie(categoryId);
+            var category = blockbusterCategory.getCategory(categoryId);
 
-            System.out.println("Category: "+ movie.getTitulo() + ", Id: " + movie.getId());
+            System.out.println("Category: "+ category.getName() + ", Descripcion: " + category.getDescription());
 
         } else {
 
             System.out.println("=== Get All Categories === ");
 
-            List<movie> movies = blockbuster.getAllMovies();
+            List<Category> category = blockbusterCategory.getAllCategory();
 
             System.out.println("Codigo \t\t Category");
-            for (movie m : movies) {
-                System.out.println(m.getId() + "\t\t" + m.getTitulo());
+            for (Category m : category) {
+                System.out.println(m.getId() + "\t\t" + m.getName());
             }
 
         }

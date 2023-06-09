@@ -12,6 +12,7 @@ import tec.bd.blockbuster.dao.ClientDao;
 import tec.bd.blockbuster.dao.MovieDao;
 import tec.bd.blockbuster.dao.PrestamoDao;
 import tec.bd.blockbuster.movie;
+import tec.bd.blockbuster.rentals;
 
 public class BlockbusterRental {
 
@@ -25,47 +26,47 @@ public class BlockbusterRental {
      * Lista todas las peliculas
      * @return
      */
-    public List<movie> getAllMovies() {
+    public List<rentals> getAllRental() {
         return this.prestamoDAO.findAll();
     }
 
     /**
      * Agrega una pelicula
-     * @param movie
+     * @param rental
      */
-    public void addNewMovie(movie movie) {
-        this.prestamoDAO.save(movie);
+    public void addNewRental(rentals rental) {
+        this.prestamoDAO.save(rental);
     }
 
     /**
      * Obtiene una pelicula por titulo
-     * @param movieName
+     * @param rentalName
      * @return
      */
-    public movie getMovie(String movieName) {
-        return this.prestamoDAO.findByTitle(movieName).orElse(null);
+    public rentals getRentalDate(String rentalName) {
+        return this.prestamoDAO.findByTitle(rentalName).orElse(null);
     }
 
     /**
      * Obtiene una pelicula por movieId
-     * @param movieId
+     * @param rentalId
      * @return
      */
-    public movie getMovie(long movieId) {
-        return this.prestamoDAO.findById(movieId).orElse(null);
+    public rentals getRental(long rentalId) {
+        return this.prestamoDAO.findById(rentalId).orElse(null);
     }
 
-    public void editMovieTitle(String currentMovieName, String newMovieName) {
-        var movie = this.getMovie(currentMovieName);
-        movie.setTitulo(newMovieName);
+    public void editRental(String currentRentalName, String newRentalName) {
+        var rental = this.getRentalDate(currentRentalName);
+        //rental.getMovie_id(newRenName);
     }
 
     /**
      * Borra una pelicula
-     * @param movieId
+     * @param rentalId
      */
-    public void remove(long movieId) {
-        this.prestamoDAO.delete(movieId);
+    public void remove(long rentalId) {
+        this.prestamoDAO.delete(rentalId);
     }
 
 }

@@ -13,9 +13,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import tec.bd.blockbuster.dao.MovieDao;
+import tec.bd.blockbuster.dao.PrestamoDao;
 import tec.bd.blockbuster.movie;
+import tec.bd.blockbuster.rentals;
 
-public class PrestamoDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements MovieDao {
+public class PrestamoDaoImpl extends GenericMysqlDaoImpl<rentals, Long> implements PrestamoDao {
 
     private static final String SQL_FIND_ALL_PRESTAMO = "select id, rental_date, client_id, movie_id from rentals";
     private static final String SQL_FIND_BY_ID_PRESTAMO = "select id, rental_date, client_id, movie_id from rentals where id = ?";
@@ -31,8 +33,8 @@ public class PrestamoDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements
     }
 
     @Override
-    public List<movie> findAll() {
-        List<movie> movies = new ArrayList<>();
+    public List<rentals> findAll() {
+        List<rentals> rentals = new ArrayList<>();
         Connection dbConnection = null;
         try {
             dbConnection = this.dataSource.getConnection();
@@ -47,11 +49,11 @@ public class PrestamoDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements
                 throw new RuntimeException(sqlEx);
             }
         }
-        return movies;
+        return rentals;
     }
 
     @Override
-    public Optional<movie> findById(Long movieId) {
+    public Optional<rentals> findById(Long rentalId) {
         Connection dbConnection = null;
         try {
             dbConnection = this.dataSource.getConnection();
@@ -73,7 +75,7 @@ public class PrestamoDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements
     }
 
     @Override
-    public Optional<movie> findByTitle(String title) {
+    public Optional<rentals> findByTitle(String title) {
         Connection dbConnection = null;
         try {
             dbConnection = this.dataSource.getConnection();
@@ -95,13 +97,14 @@ public class PrestamoDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements
     }
 
     @Override
-    public void save(movie movie) {
+    public void save(rentals rental) {
         Connection dbConnection = null;
         try {
             dbConnection = this.dataSource.getConnection();
             PreparedStatement insertMovie = dbConnection.prepareStatement(SQL_INSERT_PRESTAMO);
-            insertMovie.setString(1, movie.getTitulo());
-            var releaseDate = new java.sql.Date(movie.getFecha_lanzamiento().getTime());
+            insertMovie.setInt(1, rental.getClient_id());
+            var releaseDate = new java.sql.Date(rental.getRental_date().getTime());
+            insertMovie.setInt(1, rental.getMovie_id());
             insertMovie.setDate(2, releaseDate);
             //insertMovie.setString(3, movie.getCategory());
             insertMovie.executeUpdate();
@@ -115,45 +118,44 @@ public class PrestamoDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements
     }
 
     @Override
-    public void delete(Long movieId) {
+    public void delete(Long rentalId) {
         Connection dbConnection = null;
         try {
             dbConnection = this.dataSource.getConnection();
             CallableStatement stmt = dbConnection.prepareCall(PROC_DELETE_PRESTAMO);
-            stmt.setLong(1, movieId);
+            stmt.setLong(1, rentalId);
             stmt.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace(); // no recomendado
 
-            throw new RuntimeException("Can't delete movie id " + movieId, e);
+            throw new RuntimeException("Can't delete movie id " + rentalId, e);
         }
     }
 
     @Override
-    public Optional<movie> update(movie movie) {
+    public Optional<rentals> update(rentals rental) {
         return null;
     }
 
     @Override
-    protected movie resultSetToEntity(ResultSet resultSet) throws SQLException {
-        var movieId = resultSet.getInt("Id");
-        var title = resultSet.getString("titulo");
-        var releaseDate = resultSet.getDate("fecha_lanzamiento");
-        var category = resultSet.getString("category_id");
-        var units_available = resultSet.getString("unidades disponibles");
+    protected rentals resultSetToEntity(ResultSet resultSet) throws SQLException {
+        var rentalId = resultSet.getInt("id");
+        var rental_date = resultSet.getString("rental_date");
+        var client_id = resultSet.getDate("client_id");
+        var movie_id = resultSet.getString("movie_id");
         //var movie = new movie(movieId, title, new Date(releaseDate.getTime()), category);
         //return movie;
         return null;
     }
 
     @Override
-    protected List<movie> resultSetToList(ResultSet resultSet) throws SQLException {
-        List<movie> movies = new ArrayList<>();
+    protected List<rentals> resultSetToList(ResultSet resultSet) throws SQLException {
+        List<rentals> rental = new ArrayList<>();
         while(resultSet.next()) {
-            movies.add(resultSetToEntity(resultSet));
+            rental.add(resultSetToEntity(resultSet));
         }
-        return movies;
+        return rental;
     }
 
 

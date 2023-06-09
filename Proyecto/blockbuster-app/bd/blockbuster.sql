@@ -52,12 +52,7 @@ delimiter ;
 
 #call operacion_prueba();
   
-start transaction;
-set autocommit = 0;
-insert into clients (nombre, apellido, cedula, telefono, direccion)
-values
-  ('Francisco', 'De la cruz', 209870899, 87995678, 'Alajuela');
-rollback;
+
 
 create table review(
   id int not null auto_increment,

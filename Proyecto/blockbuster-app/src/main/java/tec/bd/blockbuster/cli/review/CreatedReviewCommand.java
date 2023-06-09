@@ -4,19 +4,21 @@
  */
 package tec.bd.blockbuster.cli.review;
 
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import tec.bd.Application;
 
 @Command(name = "revc", description = "Create Review")
 public class CreatedReviewCommand implements Runnable {
-
-    // param id
-
-    // param titulo
-
-    // param categoria
+     @CommandLine.Parameters(paramLabel = "<review id>", description = "Id of review")
+    private int reviewId;
 
     @Override
     public void run() {
+        var blockbuster = new Application().getBlockbusterReview();
 
+        blockbuster.getReview(reviewId);
+
+        System.out.println("Rental: " + reviewId + " was deleted successfully");
     }
 }

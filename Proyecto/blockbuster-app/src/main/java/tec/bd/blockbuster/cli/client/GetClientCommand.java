@@ -10,6 +10,8 @@ import picocli.CommandLine.Command;
 import java.util.List;
 import tec.bd.Application;
 import tec.bd.Blockbuster;
+import tec.bd.BlockbusterClient;
+import tec.bd.blockbuster.clients;
 import tec.bd.blockbuster.movie;
 
 @Command(name = "clir", description = "Get All Clients")
@@ -22,24 +24,24 @@ public class GetClientCommand implements Runnable {
     public void run() {
 
         System.out.println("clientId: " + clientId);
-        Blockbuster blockbuster = new Application().getBlockbuster();
+        BlockbusterClient blockbuster = new Application().getBlockbusterClient();
 
         if (clientId != 0) {
             // La logica encontrar por movieId
             System.out.println("=== Get Movie Id === ");
-            var movie = blockbuster.getMovie(clientId);
+            var client = blockbuster.getClient(clientId);
 
-            System.out.println("Nombre: "+ movie.getTitulo() + ", Id: " + movie.getId());
+            System.out.println("Nombre: "+ client.getNombre() + ", Apellido: " + client.getApellido());
 
         } else {
 
             System.out.println("=== Get All Clients === ");
 
-            List<movie> movies = blockbuster.getAllMovies();
+            List<clients> client = blockbuster.getAllClient();
 
             System.out.println("Codigo \t\t Nombre");
-            for (movie m : movies) {
-                System.out.println(m.getId() + "\t\t" + m.getTitulo());
+            for (clients m : client) {
+                System.out.println(m.getId() + "\t\t" + m.getDireccion());
             }
 
         }

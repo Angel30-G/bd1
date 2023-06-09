@@ -12,10 +12,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import tec.bd.blockbuster.clients;
+import tec.bd.blockbuster.dao.ClientDao;
 import tec.bd.blockbuster.dao.MovieDao;
 import tec.bd.blockbuster.movie;
 
-public class ClientDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements MovieDao {
+public class ClientDaoImpl extends GenericMysqlDaoImpl<clients, Long> implements ClientDao {
 
     private static final String SQL_FIND_ALL_CLIENT = "select id, nombre, apellido, cedula, telefono, direccion from clients";
     private static final String SQL_FIND_BY_ID_CLIENT = "select id, nombre, apellido, cedula,telefono, direccion from clients where id = ?";
@@ -31,8 +33,8 @@ public class ClientDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements M
     }
 
     @Override
-    public List<movie> findAll() {
-        List<movie> movies = new ArrayList<>();
+    public List<clients> findAll() {
+        List<clients> clients = new ArrayList<>();
         Connection dbConnection = null;
         try {
             dbConnection = this.dataSource.getConnection();
@@ -47,11 +49,11 @@ public class ClientDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements M
                 throw new RuntimeException(sqlEx);
             }
         }
-        return movies;
+        return clients;
     }
 
     @Override
-    public Optional<movie> findById(Long movieId) {
+    public Optional<clients> findById(Long clientId) {
         Connection dbConnection = null;
         try {
             dbConnection = this.dataSource.getConnection();
@@ -73,12 +75,12 @@ public class ClientDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements M
     }
 
     @Override
-    public Optional<movie> findByTitle(String title) {
+    public Optional<clients> findByTitle(String client) {
         Connection dbConnection = null;
         try {
             dbConnection = this.dataSource.getConnection();
             var stmt = dbConnection.prepareStatement(SQL_FIND_BY_TITLE);
-            stmt.setString(1, title );
+            stmt.setString(1, client );
             var resultSet = stmt.executeQuery();
             if(resultSet.next()) {
                 return Optional.of(resultSetToEntity(resultSet));
@@ -95,16 +97,18 @@ public class ClientDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements M
     }
 
     @Override
-    public void save(movie movie) {
+    public void save(clients client) {
         Connection dbConnection = null;
         try {
             dbConnection = this.dataSource.getConnection();
-            PreparedStatement insertMovie = dbConnection.prepareStatement(SQL_INSERT_CLIENT);
-            insertMovie.setString(1, movie.getTitulo());
-            var releaseDate = new java.sql.Date(movie.getFecha_lanzamiento().getTime());
-            insertMovie.setDate(2, releaseDate);
+            PreparedStatement insertClient = dbConnection.prepareStatement(SQL_INSERT_CLIENT);
+            insertClient.setString(1, client.getNombre());
+            insertClient.setString(1, client.getApellido());
+            insertClient.setString(1, client.getDireccion());
+            //var releaseDate = new java.sql.Date(movie.getFecha_lanzamiento().getTime());
+            //insertMovie.setDate(2, releaseDate);
             //insertMovie.setString(3, movie.getCategory());
-            insertMovie.executeUpdate();
+            insertClient.executeUpdate();
         } catch (Exception e) {
             try {
                 dbConnection.rollback();
@@ -115,45 +119,46 @@ public class ClientDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements M
     }
 
     @Override
-    public void delete(Long movieId) {
+    public void delete(Long clientId) {
         Connection dbConnection = null;
         try {
             dbConnection = this.dataSource.getConnection();
             CallableStatement stmt = dbConnection.prepareCall(PROC_DELETE_CLIENT);
-            stmt.setLong(1, movieId);
+            stmt.setLong(1, clientId);
             stmt.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace(); // no recomendado
 
-            throw new RuntimeException("Can't delete movie id " + movieId, e);
+            throw new RuntimeException("Can't delete movie id " + clientId, e);
         }
     }
 
     @Override
-    public Optional<movie> update(movie movie) {
+    public Optional<clients> update(clients client) {
         return null;
     }
 
     @Override
-    protected movie resultSetToEntity(ResultSet resultSet) throws SQLException {
-        var movieId = resultSet.getInt("Id");
-        var title = resultSet.getString("titulo");
-        var releaseDate = resultSet.getDate("fecha_lanzamiento");
-        var category = resultSet.getString("category_id");
-        var units_available = resultSet.getString("unidades disponibles");
+    protected clients resultSetToEntity(ResultSet resultSet) throws SQLException {
+        var clientId = resultSet.getInt("id");
+        var nombre = resultSet.getString("nombre");
+        var apellido = resultSet.getDate("apellido");
+        var cedula = resultSet.getString("cedula");
+        var telefono = resultSet.getString("telefono");
+        var direccion = resultSet.getString("direccion");
         //var movie = new movie(movieId, title, new Date(releaseDate.getTime()), category);
         //return movie;
         return null;
     }
 
     @Override
-    protected List<movie> resultSetToList(ResultSet resultSet) throws SQLException {
-        List<movie> movies = new ArrayList<>();
+    protected List<clients> resultSetToList(ResultSet resultSet) throws SQLException {
+        List<clients> clients = new ArrayList<>();
         while(resultSet.next()) {
-            movies.add(resultSetToEntity(resultSet));
+            clients.add(resultSetToEntity(resultSet));
         }
-        return movies;
+        return clients;
     }
 
 

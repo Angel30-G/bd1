@@ -7,23 +7,24 @@ package tec.bd.blockbuster.dao;
 
 import java.util.List;
 import java.util.Optional;
+import tec.bd.blockbuster.clients;
 import tec.bd.blockbuster.movie;
 
-public interface ClientDao extends GenericDao<movie, Long> {
+public interface ClientDao extends GenericDao<clients, Long> {
 
-    Optional<movie> findByTitle(String title);
+    Optional<clients> findByTitle(String client);
     
     @Override
-    List<movie> findAll();
+    List<clients> findAll();
 
     @Override
-    Optional<movie> findById(Long movieId);
+    Optional<clients> findById(Long movieId);
 
     @Override
-    void save(movie movie);
+    void save(clients client);
 
     @Override
-    Optional<movie> update(movie movie);
+    Optional<clients> update(clients client);
 
     @Override
     void delete(Long movieId);

@@ -17,9 +17,9 @@ public class DeleteCategoryCommand implements Runnable {
 
     @Override
     public void run() {
-        var blockbuster = new Application().getBlockbuster();
+        var blockbusterCategory = new Application().getBlockbusterCategory();
 
-        blockbuster.remove(categoryId);
+        blockbusterCategory.remove(categoryId);
 
         System.out.println("Category: " + categoryId + " was deleted successfully");
     }

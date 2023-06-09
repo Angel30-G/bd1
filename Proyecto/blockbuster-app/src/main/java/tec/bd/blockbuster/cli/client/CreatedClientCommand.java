@@ -4,19 +4,24 @@
  */
 package tec.bd.blockbuster.cli.client;
 
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import tec.bd.Application;
+import tec.bd.blockbuster.Category;
+import tec.bd.blockbuster.clients;
 
 @Command(name = "clic", description = "Create Client")
 public class CreatedClientCommand implements Runnable {
+    @CommandLine.Parameters(paramLabel = "<client id>", description = "Id of client")
+    private clients clientId;
 
-    // param id
-
-    // param titulo
-
-    // param categoria
 
     @Override
     public void run() {
+        var blockbusterClient = new Application().getBlockbusterClient();
 
+        blockbusterClient.addNewClient(clientId);
+
+        System.out.println("Category: " + clientId + " was deleted successfully");
     }
 }

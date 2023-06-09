@@ -8,23 +8,24 @@ package tec.bd.blockbuster.dao;
 import java.util.List;
 import java.util.Optional;
 import tec.bd.blockbuster.movie;
+import tec.bd.blockbuster.rentals;
 
-public interface PrestamoDao extends GenericDao<movie, Long> {
+public interface PrestamoDao extends GenericDao<rentals, Long> {
 
-    Optional<movie> findByTitle(String title);
+    Optional<rentals> findByTitle(String title);
     
     @Override
-    List<movie> findAll();
+    List<rentals> findAll();
 
     @Override
-    Optional<movie> findById(Long movieId);
+    Optional<rentals> findById(Long rentalsId);
 
     @Override
-    void save(movie movie);
+    void save(rentals rental);
 
     @Override
-    Optional<movie> update(movie movie);
+    Optional<rentals> update(rentals rental);
 
     @Override
-    void delete(Long movieId);
+    void delete(Long rentalId);
 }

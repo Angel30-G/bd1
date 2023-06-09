@@ -13,14 +13,14 @@ import tec.bd.blockbuster.ApplicationContext;
 public class DeletePrestamosCommand implements Runnable {
 
     @CommandLine.Parameters(paramLabel = "<prestamos id>", description = "Id of Prestamos")
-    private long rentalsId;
+    private long rentalId;
 
     @Override
     public void run() {
-        var blockbuster = new Application().getBlockbuster();
+        var blockbuster = new Application().getBlockbusterRental();
 
-        blockbuster.remove(rentalsId);
+        blockbuster.remove(rentalId);
 
-        System.out.println("Rentals Id: " + rentalsId + " was deleted successfully");
+        System.out.println("Rentals Id: " + rentalId + " was deleted successfully");
     }
 }

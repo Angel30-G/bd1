@@ -17,7 +17,7 @@ public class DeleteReviewCommand implements Runnable {
 
     @Override
     public void run() {
-        var blockbuster = new Application().getBlockbuster();
+        var blockbuster = new Application().getBlockbusterReview();
 
         blockbuster.remove(reviewId);
 

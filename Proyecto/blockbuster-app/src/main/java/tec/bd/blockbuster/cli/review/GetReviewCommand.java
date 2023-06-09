@@ -10,7 +10,9 @@ import picocli.CommandLine.Command;
 import java.util.List;
 import tec.bd.Application;
 import tec.bd.Blockbuster;
+import tec.bd.BlockbusterReview;
 import tec.bd.blockbuster.movie;
+import tec.bd.blockbuster.review;
 
 @Command(name = "revr", description = "Get All Reviews")
 public class GetReviewCommand implements Runnable {
@@ -22,24 +24,24 @@ public class GetReviewCommand implements Runnable {
     public void run() {
 
         System.out.println("reviewId: " + reviewId);
-        Blockbuster blockbuster = new Application().getBlockbuster();
+        BlockbusterReview blockbuster = new Application().getBlockbusterReview();
 
         if (reviewId != 0) {
             // La logica encontrar por movieId
             System.out.println("=== Get Review Id === ");
-            var movie = blockbuster.getMovie(reviewId);
+            var review = blockbuster.getReview(reviewId);
 
-            System.out.println("Descripcion: "+ movie.getTitulo() + ", Id: " + movie.getId());
+            System.out.println("Rating: "+ review.getRating() + ", Comentario: " + review.getReview_text());
 
         } else {
 
             System.out.println("=== Get All Reviews === ");
 
-            List<movie> movies = blockbuster.getAllMovies();
+            List<review> review = blockbuster.getAllReview();
 
             System.out.println("Codigo \t\t Descripcion");
-            for (movie m : movies) {
-                System.out.println(m.getId() + "\t\t" + m.getTitulo());
+            for (review m : review) {
+                System.out.println(m.getId() + "\t\t" + m.getRating());
             }
 
         }

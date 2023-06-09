@@ -17,9 +17,9 @@ public class DeleteClientCommand implements Runnable {
 
     @Override
     public void run() {
-        var blockbuster = new Application().getBlockbuster();
+        var blockbusterClient = new Application().getBlockbusterClient();
 
-        blockbuster.remove(clientId);
+        blockbusterClient.remove(clientId);
 
         System.out.println("Movie Id: " + clientId + " was deleted successfully");
     }

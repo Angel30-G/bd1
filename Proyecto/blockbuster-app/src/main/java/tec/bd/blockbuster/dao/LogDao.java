@@ -7,23 +7,24 @@ package tec.bd.blockbuster.dao;
 
 import java.util.List;
 import java.util.Optional;
+import tec.bd.blockbuster.log;
 import tec.bd.blockbuster.movie;
 
-public interface LogDao extends GenericDao<movie, Long> {
+public interface LogDao extends GenericDao<log, Long> {
 
     Optional<movie> findByTitle(String title);
     
     @Override
-    List<movie> findAll();
+    List<log> findAll();
 
     @Override
-    Optional<movie> findById(Long movieId);
+    Optional<log> findById(Long movieId);
 
     @Override
-    void save(movie movie);
+    void save(log log);
 
     @Override
-    Optional<movie> update(movie movie);
+    Optional<log> update(log log);
 
     @Override
     void delete(Long movieId);

@@ -12,6 +12,7 @@ import tec.bd.blockbuster.dao.ClientDao;
 import tec.bd.blockbuster.dao.MovieDao;
 import tec.bd.blockbuster.dao.ReviewDao;
 import tec.bd.blockbuster.movie;
+import tec.bd.blockbuster.review;
 
 public class BlockbusterReview {
 
@@ -25,47 +26,47 @@ public class BlockbusterReview {
      * Lista todas las peliculas
      * @return
      */
-    public List<movie> getAllMovies() {
+    public List<review> getAllReview() {
         return this.reviewDAO.findAll();
     }
 
     /**
      * Agrega una pelicula
-     * @param movie
+     * @param review
      */
-    public void addNewMovie(movie movie) {
-        this.reviewDAO.save(movie);
+    public void addNewReview(review review) {
+        this.reviewDAO.save(review);
     }
 
     /**
      * Obtiene una pelicula por titulo
-     * @param movieName
+     * @param reviewName
      * @return
      */
-    public movie getMovie(String movieName) {
-        return this.reviewDAO.findByTitle(movieName).orElse(null);
+    public review getReviewRating(String reviewName) {
+        return this.reviewDAO.findByTitle(reviewName).orElse(null);
     }
 
     /**
      * Obtiene una pelicula por movieId
-     * @param movieId
+     * @param reviewId
      * @return
      */
-    public movie getMovie(long movieId) {
-        return this.reviewDAO.findById(movieId).orElse(null);
+    public review getReview(long reviewId) {
+        return this.reviewDAO.findById(reviewId).orElse(null);
     }
 
-    public void editMovieTitle(String currentMovieName, String newMovieName) {
-        var movie = this.getMovie(currentMovieName);
-        movie.setTitulo(newMovieName);
+    public void editReviewRating(String currentReviewName, String newReviewName) {
+        var review = this.getReviewRating(currentReviewName);
+        review.setReview_text(newReviewName);
     }
 
     /**
      * Borra una pelicula
-     * @param movieId
+     * @param reviewId
      */
-    public void remove(long movieId) {
-        this.reviewDAO.delete(movieId);
+    public void remove(long reviewId) {
+        this.reviewDAO.delete(reviewId);
     }
 
 }

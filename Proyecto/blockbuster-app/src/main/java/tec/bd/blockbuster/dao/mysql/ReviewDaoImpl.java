@@ -145,9 +145,9 @@ public class ReviewDaoImpl extends GenericMysqlDaoImpl<review, Long> implements 
         var reviewId = resultSet.getInt("id");
         var rating = resultSet.getInt("rating");
         var review_text = resultSet.getString("review_text");
-        var created_on = resultSet.getDate("created_om");
-        var client_id = resultSet.getInt("category_id");
-        var movie_id = resultSet.getInt("unidades disponibles");
+        var created_on = resultSet.getDate("created_on");
+        var client_id = resultSet.getInt("client_id");
+        var movie_id = resultSet.getInt("movie_id");
         //var movie = new movie(movieId, title, new Date(releaseDate.getTime()), category);
         //return movie;
         return null;

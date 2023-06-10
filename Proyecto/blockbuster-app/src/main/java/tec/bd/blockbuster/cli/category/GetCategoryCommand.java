@@ -41,7 +41,7 @@ public class GetCategoryCommand implements Runnable {
 
             System.out.println("Codigo \t\t Category");
             for (Category m : category) {
-                System.out.println(m.getId() + "\t\t" + m.getName());
+                System.out.println(m.getName() + "\t\t" + m.getDescription());
             }
 
         }

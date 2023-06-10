@@ -57,7 +57,7 @@ delimiter ;
 create table review(
   id int not null auto_increment,
   rating int not null,
-  review_text varchar(50) not null,
+  review_text varchar(100) not null,
   created_on datetime not null,
   client_id int not null,
   movie_id int not null,
@@ -66,15 +66,17 @@ create table review(
   foreign key(movie_id) references movie(id)
 );
 
+
+
 insert into review (rating, review_text, created_on, client_id, movie_id)
 values
-  (4, 'Fue una pelicula muy buena', '2010-8-27', 4),
-  (3, 'No me gustó mucho la película, la trama era confusa', '2018-3-15', 2),
-  (5, 'Definitivamente recomendaría esta película, me mantuvo enganchado de principio a fin', '2019-11-28', 5),
-  (4, 'La película estuvo bien, pero esperaba más acción', '2005-9-3', 3),
-  (3, 'No entendí muy bien la película, la encontré un poco aburrida', '2014-7-20', 2),
-  (5, '¡Increíble película! No pude apartar la vista de la pantalla', '2017-2-14', 5),
-  (5, 'Me encantó el mensaje que transmitía la película, realmente me hizo reflexionar', '2023-1-7', 4);
+  (1, 'Fue una pelicula muy buena', '2010-8-27', 4, 3),
+  (3, 'No me gustó mucho la película, la trama era confusa', '2018-3-15', 2, 4),
+  (5, 'Definitivamente recomendaría esta película, me mantuvo enganchado de principio a fin', '2019-11-28', 5, 3),
+  (4, 'La película estuvo bien, pero esperaba más acción', '2005-9-3', 3, 1),
+  (3, 'No entendí muy bien la película, la encontré un poco aburrida', '2014-7-20', 2, 4),
+  (5, '¡Increíble película! No pude apartar la vista de la pantalla', '2017-2-14', 5, 2),
+  (5, 'Me encantó el mensaje que transmitía la película, realmente me hizo reflexionar', '2023-1-7', 4, 1);
 
 start transaction;
 delimiter //

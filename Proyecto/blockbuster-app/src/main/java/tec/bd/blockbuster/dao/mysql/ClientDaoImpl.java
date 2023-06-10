@@ -143,9 +143,9 @@ public class ClientDaoImpl extends GenericMysqlDaoImpl<clients, Long> implements
     protected clients resultSetToEntity(ResultSet resultSet) throws SQLException {
         var clientId = resultSet.getInt("id");
         var nombre = resultSet.getString("nombre");
-        var apellido = resultSet.getDate("apellido");
-        var cedula = resultSet.getString("cedula");
-        var telefono = resultSet.getString("telefono");
+        var apellido = resultSet.getString("apellido");
+        var cedula = resultSet.getInt("cedula");
+        var telefono = resultSet.getInt("telefono");
         var direccion = resultSet.getString("direccion");
         //var movie = new movie(movieId, title, new Date(releaseDate.getTime()), category);
         //return movie;

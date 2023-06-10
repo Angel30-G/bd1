@@ -141,9 +141,9 @@ public class PrestamoDaoImpl extends GenericMysqlDaoImpl<rentals, Long> implemen
     @Override
     protected rentals resultSetToEntity(ResultSet resultSet) throws SQLException {
         var rentalId = resultSet.getInt("id");
-        var rental_date = resultSet.getString("rental_date");
-        var client_id = resultSet.getDate("client_id");
-        var movie_id = resultSet.getString("movie_id");
+        var rental_date = resultSet.getDate("rental_date");
+        var client_id = resultSet.getInt("client_id");
+        var movie_id = resultSet.getInt("movie_id");
         //var movie = new movie(movieId, title, new Date(releaseDate.getTime()), category);
         //return movie;
         return null;

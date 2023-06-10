@@ -21,6 +21,6 @@ public class CreatedMovieCommand implements Runnable {
 
         blockbuster.addNewMovie(movieId);
 
-        System.out.println("Category: " + movieId + " was deleted successfully");
+        System.out.println("Category: " + movieId + " was creat successfully");
     }
 }

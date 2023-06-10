@@ -142,7 +142,7 @@ public class CategoryDaoImpl extends GenericMysqlDaoImpl<Category, Long> impleme
     protected Category resultSetToEntity(ResultSet resultSet) throws SQLException {
         var categoryId = resultSet.getInt("Id");
         var nombre = resultSet.getString("nombre");
-        var descripcion = resultSet.getDate("descripcion");
+        var descripcion = resultSet.getString("descripcion");
         //var movie = new movie(movieId, title, new Date(releaseDate.getTime()), category);
         //return movie;
         return null;

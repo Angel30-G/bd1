@@ -141,7 +141,7 @@ public class MovieDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements Mo
         var title = resultSet.getString("titulo");
         var releaseDate = resultSet.getDate("fecha_lanzamiento");
         var category = resultSet.getString("category_id");
-        var units_available = resultSet.getString("unidades disponibles");
+        var units_available = resultSet.getInt("unidades disponibles");
         //var movie = new movie(movieId, title, new Date(releaseDate.getTime()), category);
         //return movie;
         return null;

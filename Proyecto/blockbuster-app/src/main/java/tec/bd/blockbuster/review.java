@@ -11,6 +11,17 @@ import java.util.Date;
  * @author pc
  */
 public class review {
+    private int id;
+    
+    private int rating;
+    
+    private String review_text;
+    
+    private Date created_on;
+    
+    private int client_id;
+    
+    private int movie_id;
 
     public int getId() {
         return id;
@@ -59,15 +70,4 @@ public class review {
     public void setMovie_id(int movie_id) {
         this.movie_id = movie_id;
     }
-    private int id;
-    
-    private int rating;
-    
-    private String review_text;
-    
-    private Date created_on;
-    
-    private int client_id;
-    
-    private int movie_id;
 }

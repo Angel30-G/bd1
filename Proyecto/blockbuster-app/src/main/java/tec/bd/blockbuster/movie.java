@@ -12,47 +12,57 @@ import java.util.Locale.Category;
  * @author pc
  */
 public class movie {
-    private int id;
+    private int movieId;
     
-    private String titulo;
+    private String title;
     
-    private Category category;
+     private int category;
     
-    private Date fecha_lanzamiento;
+    private Date release_date;
     
     private int unit_available;
-    
 
-    public int getId() {
-        return id;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public Category getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(int category) {
         this.category = category;
     }
+    
+  
 
-    public Date getFecha_lanzamiento() {
-        return fecha_lanzamiento;
+    public int getId() {
+        return movieId;
     }
 
-    public void setFecha_lanzamiento(Date fecha_lanzamiento) {
-        this.fecha_lanzamiento = fecha_lanzamiento;
+    public void setId(int id) {
+        this.movieId = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+
+    public Date getRelease_date() {
+        return release_date;
+    }
+
+    public void setRelease_date(Date release_date) {
+        this.release_date = release_date;
     }
 
     public int getUnit_available() {
@@ -62,10 +72,9 @@ public class movie {
     public void setUnit_available(int unit_available) {
         this.unit_available = unit_available;
     }
+    
 
-    public void setCategory(tec.bd.blockbuster.Category category) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
 }
 

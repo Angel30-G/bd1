@@ -39,13 +39,12 @@ public class blockbusterRepositoryImpl implements blockbusterRepository {
             Category category = new Category();
             movie movie = new movie();
             
-            category.setId(resultSet.getInt("category_id"));
-            category.setName(resultSet.getString("category_id"));
+            category.setName(resultSet.getString("category"));
             
             movie.setId(resultSet.getInt("id"));
-            movie.setTitulo(resultSet.getString("titulo"));
+            movie.setTitle(resultSet.getString("title"));
             
-            movie.setCategory(category);
+            //movie.setCategory(category);
             entities.add(movie);
         }
         return entities;
@@ -85,7 +84,7 @@ public class blockbusterRepositoryImpl implements blockbusterRepository {
         String query = "insert into movie(titulo, category_id) values (?, ?)";
         var connection = this.datasource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query, 0);
-        preparedStatement.setString(1, movie.getTitulo());
+        preparedStatement.setString(1, movie.getTitle());
         //preparedStatement.setInt(1, movie.getCategory().getId());
         var rowsAffected = preparedStatement.executeUpdate();
         System.out.println("Rows Affected"+ rowsAffected);
@@ -95,7 +94,7 @@ public class blockbusterRepositoryImpl implements blockbusterRepository {
             var lastInsertedId = resultSet.getInt(1);
             movie newMovie = new movie();
             newMovie.setId(lastInsertedId);
-            newMovie.setTitulo(movie.getTitulo());
+            newMovie.setTitle(movie.getTitle());
             newMovie.setCategory(movie.getCategory());
            
         }

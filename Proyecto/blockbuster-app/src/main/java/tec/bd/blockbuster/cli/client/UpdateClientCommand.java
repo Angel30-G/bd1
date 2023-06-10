@@ -16,7 +16,7 @@ public class UpdateClientCommand implements Runnable {
     public void run() {
         var blockbusterClient = new Application().getBlockbusterClient();
         
-        var category = blockbusterClient.getClient(clientOld);
+        var client = blockbusterClient.getClient(clientOld);
         
 
         blockbusterClient.editClientName(clientOld, clientNew);

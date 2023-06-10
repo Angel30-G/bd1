@@ -22,7 +22,7 @@ public class UpdateCategoryCommand implements Runnable {
 
         blockbusterCategory.editCategory(categoryOld, categoryNew);
 
-        System.out.println("New Category: " + categoryNew + " was deleted successfully");
+        System.out.println("New Category: " + categoryNew + " was modified successfully");
     
     
     }

@@ -17,10 +17,10 @@ import tec.bd.blockbuster.movie;
 
 public class MovieDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements MovieDao {
 
-    private static final String SQL_FIND_ALL_MOVIES = "select id, titulo, fecha_lanzamiento, category_id, units_available from movie";
-    private static final String SQL_FIND_BY_ID_MOVIE = "select id, titulo, fecha_lanzamiento, category_id, units_available from movie where id = ?";
-    private static final String SQL_FIND_BY_TITLE = "select id, titulo, fecha_lanzamiento, category_id, units_available from movie where titulo like ?";
-    private static final String SQL_INSERT_MOVIE = "insert into movie(titulo, fecha_lanzamiento, category_id, units_available) values (?, ?, ?, ?)";
+    private static final String SQL_FIND_ALL_MOVIES = "select id, title, release_date, category_id, units_available from movie";
+    private static final String SQL_FIND_BY_ID_MOVIE = "select id, title, release_date, category_id, units_available from movie where id = ?";
+    private static final String SQL_FIND_BY_TITLE = "select id, title, release_date, category_id, units_available from movie where title like ?";
+    private static final String SQL_INSERT_MOVIE = "insert into movie(title, release_date, category_id, units_available) values (?, ?, ?, ?)";
 
     private static final String PROC_DELETE_MOVIE = "{call delete_movie(?)}";
 
@@ -100,8 +100,8 @@ public class MovieDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements Mo
         try {
             dbConnection = this.dataSource.getConnection();
             PreparedStatement insertMovie = dbConnection.prepareStatement(SQL_INSERT_MOVIE);
-            insertMovie.setString(1, movie.getTitulo());
-            var releaseDate = new java.sql.Date(movie.getFecha_lanzamiento().getTime());
+            insertMovie.setString(1, movie.getTitle());
+            var releaseDate = new java.sql.Date(movie.getRelease_date().getTime());
             insertMovie.setDate(2, releaseDate);
             //insertMovie.setString(3, movie.getCategory());
             insertMovie.executeUpdate();
@@ -138,10 +138,10 @@ public class MovieDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements Mo
     @Override
     protected movie resultSetToEntity(ResultSet resultSet) throws SQLException {
         var movieId = resultSet.getInt("Id");
-        var title = resultSet.getString("titulo");
-        var releaseDate = resultSet.getDate("fecha_lanzamiento");
+        var title = resultSet.getString("title");
+        var releaseDate = resultSet.getDate("release_date");
         var category = resultSet.getString("category_id");
-        var units_available = resultSet.getInt("unidades disponibles");
+        var units_available = resultSet.getInt("units_available");
         //var movie = new movie(movieId, title, new Date(releaseDate.getTime()), category);
         //return movie;
         return null;

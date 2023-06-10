@@ -7,7 +7,7 @@ DROP USER IF EXISTS 'blockbusterappuser'@'localhost';
 CREATE USER IF NOT EXISTS 'blockbusterappuser'@'localhost' IDENTIFIED BY 'blockbusterapppass';
 GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON blockbuster.* TO 'blockbusterappuser'@'localhost';
 
-SET autocommit = OFF;
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -50,6 +50,40 @@ LOCK TABLES `review` WRITE;
 INSERT INTO `review` VALUES (1,1,'Fue una pelicula muy buena','2010-08-27 00:00:00',4,3),(2,3,'No me gustó mucho la película, la trama era confusa','2018-03-15 00:00:00',2,4),(3,5,'Definitivamente recomendaría esta película, me mantuvo enganchado de principio a fin','2019-11-28 00:00:00',5,3),(4,4,'La película estuvo bien, pero esperaba más acción','2005-09-03 00:00:00',3,1),(5,3,'No entendí muy bien la película, la encontré un poco aburrida','2014-07-20 00:00:00',2,4),(6,5,'¡Increíble película! No pude apartar la vista de la pantalla','2017-02-14 00:00:00',5,2),(7,5,'Me encantó el mensaje que transmitía la película, realmente me hizo reflexionar','2023-01-07 00:00:00',4,1);
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`blockbusterappuser`@`localhost`*/ /*!50003 TRIGGER `review_insert` AFTER INSERT ON `review` FOR EACH ROW begin
+   insert into review(review_text) value (concat("Se subio una review con un rating de: ",NEW.rating, "y el: ", NEW.created_on));
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`blockbusterappuser`@`localhost`*/ /*!50003 TRIGGER `review_update` AFTER UPDATE ON `review` FOR EACH ROW begin
+   insert into review(review_text) value (concat("Se actualizo la review con el id: ",NEW.id, "y creada el: ", NEW.created_on));
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -60,4 +94,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-09 18:55:57
+-- Dump completed on 2023-06-14 18:40:46

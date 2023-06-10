@@ -29,7 +29,7 @@ public class GetMoviesCommand implements Runnable {
             System.out.println("=== Get Movie Id === ");
             var movie = blockbuster.getMovie(movieId);
 
-            System.out.println("Title: "+ movie.getTitulo() + ", Id: " + movie.getId());
+            System.out.println("Title: "+ movie.getTitle() + ", Id: " + movie.getId());
 
         } else {
 
@@ -39,7 +39,7 @@ public class GetMoviesCommand implements Runnable {
 
             System.out.println("Codigo \t\t Titulo");
             for (movie m : movies) {
-                System.out.println(m.getId() + "\t\t" + m.getTitulo());
+                System.out.println(m.getId() + "\t\t" + m.getTitle());
             }
 
         }

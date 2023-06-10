@@ -31,7 +31,7 @@ public class GetClientCommand implements Runnable {
             System.out.println("=== Get Movie Id === ");
             var client = blockbuster.getClient(clientId);
 
-            System.out.println("Nombre: "+ client.getNombre() + ", Apellido: " + client.getApellido());
+            System.out.println("Nombre: "+ client.getName() + ", Apellido: " + client.getLastname());
 
         } else {
 
@@ -41,7 +41,7 @@ public class GetClientCommand implements Runnable {
 
             System.out.println("Codigo \t\t Nombre");
             for (clients m : client) {
-                System.out.println(m.getId() + "\t\t" + m.getDireccion());
+                System.out.println(m.getId() + "\t\t" + m.getEmail());
             }
 
         }

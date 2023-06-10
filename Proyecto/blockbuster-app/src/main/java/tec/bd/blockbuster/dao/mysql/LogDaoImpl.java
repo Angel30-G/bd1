@@ -100,8 +100,8 @@ public class LogDaoImpl extends GenericMysqlDaoImpl<movie, Long> implements Movi
         try {
             dbConnection = this.dataSource.getConnection();
             PreparedStatement insertMovie = dbConnection.prepareStatement(SQL_INSERT_LOG);
-            insertMovie.setString(1, movie.getTitulo());
-            var releaseDate = new java.sql.Date(movie.getFecha_lanzamiento().getTime());
+            insertMovie.setString(1, movie.getTitle());
+            var releaseDate = new java.sql.Date(movie.getRelease_date().getTime());
             insertMovie.setDate(2, releaseDate);
             //insertMovie.setString(3, movie.getCategory());
             insertMovie.executeUpdate();

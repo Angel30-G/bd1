@@ -1,46 +1,45 @@
 #Nombre: Angel Gabriel Vargas Varela 
 #Carnet: 2021080292
-create database blockbuster;
 show databases;
-use blockbuster;
+DROP DATABASE IF EXISTS blockbuster;
+CREATE DATABASE IF NOT EXISTS blockbuster;
+USE blockbuster;
 create table clients(
   id int not null auto_increment,
-  nombre varchar(50) not null,
-  apellido varchar(50) not null,
-  cedula int not null,
-  telefono int not null,
-  direccion varchar(50) not null,
+  name varchar(50) not null,
+  lastname varchar(50) not null,
+  email varchar(50) not null,
+  phone_number int not null,
   primary key(id)
 );
 
 
-insert into clients (nombre, apellido, cedula, telefono, direccion)
+insert into clients (name, lastname, email, phone_number)
 values
-  ('Frank', 'Suarez', 209870899, 87995678, 'Alajuela'),
-  ('Pablo', 'Ramirez', 890456788, 89567810, 'San jose'),
-  ('Xavier', 'Villanueva', 210908928, 67891090, 'Guanacaste'),
-  ('Jimmy', 'Cervantes', 890184567, 78892314 , 'Limon'),
-  ('Olga', 'Vargas', 834589010, 65709009, 'Heredia'),
-  ('Maria', 'Peña', 210345670, 89592740, 'Cartago'),
-  ('Juan', 'Espinoza', 256789030, 86775302, 'Puntarenas'),
-  ('Belia', 'Santamaria', 278980017, 89305679, 'Alajuela'),
-  ('Leonardo', 'Benavides', 756789000, 76891023, 'Limon'),
-  ('Yasmin', 'Sanchez', 410234257, 81478002, 'San jose');
+  ('Frank', 'Suarez', 'Frank@gmail.com', 87995678),
+  ('Pablo', 'Ramirez','Pablo@gmail.com' , 89567810),
+  ('Xavier', 'Villanueva', 'Xavier@gmail.com', 67891090),
+  ('Jimmy', 'Cervantes', 'Jimmy@gmail.com', 78892314),
+  ('Olga', 'Vargas', 'Olga@gmail.com', 65709009),
+  ('Maria', 'Peña', 'Maria@gmail.com', 89592740),
+  ('Juan', 'Espinoza', 'Juan@gmail.com', 86775302),
+  ('Belia', 'Santamaria', 'Belia@gmail.com', 89305679),
+  ('Leonardo', 'Benavides', 'Leonardo@gmail.com', 76891023),
+  ('Yasmin', 'Sanchez', 'Yasmin@gmail.com', 81478002);
 
 start transaction;
 delimiter //
 create procedure update_client(
     in p_id int,
-    in p_nombre varchar(50),
-    in p_apellido varchar(50),
-    in p_cedula int,
-    in p_telefono int,
-    in p_direccion varchar(50),
+    in p_name varchar(50),
+    in p_lastname varchar(50),
+    in p_phone_number int,
+    in p_email varchar(50),
     out p_procedure_status int
 )
 begin
     if exists (select id from client where id = p_id) then update client
-        set nombre = p_nombre, apellido = p_apellido, cedula = p_cedula, telefono = p_telefono, direccion = p_direccion where id = p_id;
+        set name = p_name, lastname = p_lastname, phone_number = p_phone_number, email = p_email where id = p_id;
         select 1 into p_procedure_status;
     else
         set p_procedure_status =-1;
@@ -50,8 +49,47 @@ end
 //
 delimiter ;
 
-#call operacion_prueba();
+
+ create table category(
+  id int not null auto_increment,
+  name varchar(50) not null,
+  description varchar(50) not null,
+  primary key(id)
+);
+
+insert into category (name, description)
+values
+  ('Fantasia', 'Elementos de fantasia y magicos'),
+  ('Romance', 'Romantico'),
+  ('Animada', 'Creada con animacion'),
+  ('Accion', 'Mucha adrenalina'),
+  ('Drama', 'Sentimental'),
+  ('Ciencia ficcion', 'No existe'),
+  ('Terror', 'Dan miedo');
   
+create table movie(
+  id int not null auto_increment,
+  title varchar(50) not null,
+  release_date datetime not null,
+  category_id int not null,
+  units_available int not null,
+  primary key(id),
+  foreign key(category_id) references category(id)
+);
+
+
+insert into movie (title, release_date, category_id, units_available)
+values
+  ('El señor de los anillos', '2003-6-19', 1, 4),
+  ('Titanic',  '2004-12-24', 2, 8),
+  ('Buscando a Nemo',  '2020-11-5', 3, 9),
+  ('El padrino', '2021-2-7', 4, 8),
+  ('El mago de oz', '2000-10-19', 1, 3),
+  ('1914', '2019-10-19', 5, 1),
+  ('Parasyte', '2018-4-25', 5, 4),
+  ('E.T', '1998-9-17', 6, 9),
+  ('Harry Potter', '1999-11-14', 1, 10),
+  ('El conjuro', '2012-8-13', 7, 7); 
 
 
 create table review(
@@ -99,7 +137,7 @@ begin
 end
 //
 delimiter ;
-  
+
 delimiter //
 create trigger review_insert after insert on review
 for each row begin
@@ -107,12 +145,6 @@ for each row begin
 end //
 delimiter ;
 
-delimiter //
-create trigger review_delete after delete on review
-for each row begin
-   insert into review(review_text) value (concat("Se borro la review: ",NEW.id, "y creado el: ", NEW.created_on));
-end //
-delimiter ;
 
 delimiter //
 create trigger review_update after update on review
@@ -120,6 +152,8 @@ for each row begin
    insert into review(review_text) value (concat("Se actualizo la review con el id: ",NEW.id, "y creada el: ", NEW.created_on));
 end //
 delimiter ;
+
+delimiter //
 
 create table rentals(
   id int not null auto_increment,
@@ -140,78 +174,26 @@ values
   ('2019-12-1', 1, 2),
   ('2015-4-3', 1, 2),
   ('2008-9-10', 1, 2);
+  
+  DROP USER IF EXISTS 'blockbusterappuser'@'localhost';
+CREATE USER IF NOT EXISTS 'blockbusterappuser'@'localhost' IDENTIFIED BY 'blockbusterapppass';
+GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON blockbuster.* TO 'blockbusterappuser'@'localhost';
+
 
 delimiter //
-create procedure operacion_prueba(in table_names text, in created_on datetime, in entry_text text)
-begin
-  declare cantidad int unsigned;
-  select id, table_names, created_on, entry_text from blockbuster_log where id != 0;
-end //
-delimiter ;
-
-#call operacion_prueba();
-
-delimiter //
-create trigger rentals_insert after insert on review
+create trigger rentals_insert after insert on rentals
 for each row begin
    insert into rentals(client_id) value (concat("Se rento una pelicula por el usuario: ",NEW.client_id, "y en la fecha: ", NEW.rental_date));
 end //
 delimiter ;
 
 delimiter //
-create trigger rentals_delete after delete on review
+create trigger rentals_update after update on rentals
 for each row begin
-   insert into review(client_id) value (concat("Se devolvio una pelicula por el usuario: ",NEW.id, "y en la fecha: ", NEW.created_on));
+   insert into rentals(client_id) value (concat("Se actualizo la renta de una pelicula por el usuario: ",NEW.id, "y en la fecha: ", NEW.created_on));
 end //
 delimiter ;
 
-delimiter //
-create trigger rentals_update after update on review
-for each row begin
-   insert into review(client_id) value (concat("Se actualizo la renta de una pelicula por el usuario: ",NEW.id, "y en la fecha: ", NEW.created_on));
-end //
-delimiter ;
-
-create table category(
-  id int not null auto_increment,
-  nombre varchar(50) not null,
-  descripcion varchar(50) not null,
-  primary key(id)
-);
-
-insert into category (nombre, descripcion)
-values
-  ('Fantasia', 'Elementos de fantasia y magicos'),
-  ('Romance', 'Romantico'),
-  ('Animada', 'Creada con animacion'),
-  ('Accion', 'Mucha adrenalina'),
-  ('Drama', 'Sentimental'),
-  ('Ciencia ficcion', 'No existe'),
-  ('Terror', 'Dan miedo');
-  
-create table movie(
-  id int not null auto_increment,
-  titulo varchar(50) not null,
-  fecha_lanzamiento datetime not null,
-  category_id int not null,
-  units_available int not null,
-  primary key(id),
-  foreign key(category_id) references category(id)
-);
-
-
-insert into movie (titulo, fecha_lanzamiento, category_id, units_available)
-values
-  ('El señor de los anillos', '2003-6-19', 1, 4),
-  ('Titanic',  '2004-12-24', 2, 8),
-  ('Buscando a Nemo',  '2020-11-5', 3, 9),
-  ('El padrino', '2021-2-7', 4, 8),
-  ('El mago de oz', '2000-10-19', 1, 3),
-  ('1914', '2019-10-19', 5, 1),
-  ('Parasyte', '2018-4-25', 5, 4),
-  ('E.T', '1998-9-17', 6, 9),
-  ('Harry Potter', '1999-11-14', 1, 10),
-  ('El conjuro', '2012-8-13', 7, 7);
   
 create table blockbuster_log(
   id int not null auto_increment,

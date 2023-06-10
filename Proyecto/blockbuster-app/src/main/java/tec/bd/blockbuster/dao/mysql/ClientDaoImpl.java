@@ -19,10 +19,10 @@ import tec.bd.blockbuster.movie;
 
 public class ClientDaoImpl extends GenericMysqlDaoImpl<clients, Long> implements ClientDao {
 
-    private static final String SQL_FIND_ALL_CLIENT = "select id, nombre, apellido, cedula, telefono, direccion from clients";
-    private static final String SQL_FIND_BY_ID_CLIENT = "select id, nombre, apellido, cedula,telefono, direccion from clients where id = ?";
-    private static final String SQL_FIND_BY_TITLE = "select id, nombre, apellido, cedula, telefono, direccion from clients where nombre like ?";
-    private static final String SQL_INSERT_CLIENT = "insert into clients(nombre, apellido, cedula, telefono, direccion) values (?, ?, ?, ?, ?)";
+    private static final String SQL_FIND_ALL_CLIENT = "select id, name, lastname, email, phone_number from clients";
+    private static final String SQL_FIND_BY_ID_CLIENT = "select id, name, lastname, email, phone_number from clients where id = ?";
+    private static final String SQL_FIND_BY_TITLE = "select id, name, lastname, email, phone_number from clients where name like ?";
+    private static final String SQL_INSERT_CLIENT = "insert into clients(name lastname, email, phone_number) values (?, ?, ?, ?)";
 
     private static final String PROC_DELETE_CLIENT = "{call delete_clients(?)}";
 
@@ -102,9 +102,10 @@ public class ClientDaoImpl extends GenericMysqlDaoImpl<clients, Long> implements
         try {
             dbConnection = this.dataSource.getConnection();
             PreparedStatement insertClient = dbConnection.prepareStatement(SQL_INSERT_CLIENT);
-            insertClient.setString(1, client.getNombre());
-            insertClient.setString(1, client.getApellido());
-            insertClient.setString(1, client.getDireccion());
+            insertClient.setString(1, client.getName());
+            insertClient.setString(1, client.getLastname());
+            insertClient.setString(1, client.getEmail());
+            insertClient.setInt(1, client.getPhone_number());
             //var releaseDate = new java.sql.Date(movie.getFecha_lanzamiento().getTime());
             //insertMovie.setDate(2, releaseDate);
             //insertMovie.setString(3, movie.getCategory());
@@ -142,11 +143,10 @@ public class ClientDaoImpl extends GenericMysqlDaoImpl<clients, Long> implements
     @Override
     protected clients resultSetToEntity(ResultSet resultSet) throws SQLException {
         var clientId = resultSet.getInt("id");
-        var nombre = resultSet.getString("nombre");
-        var apellido = resultSet.getString("apellido");
-        var cedula = resultSet.getInt("cedula");
-        var telefono = resultSet.getInt("telefono");
-        var direccion = resultSet.getString("direccion");
+        var name = resultSet.getString("name");
+        var lastname = resultSet.getString("lastname");
+        var email = resultSet.getString("emial");
+        var phone_number = resultSet.getInt("phone_number");
         //var movie = new movie(movieId, title, new Date(releaseDate.getTime()), category);
         //return movie;
         return null;

@@ -55,7 +55,7 @@ public class Blockbuster {
 
     public void editMovieTitle(String currentMovieName, String newMovieName) {
         var movie = this.getMovie(currentMovieName);
-        movie.setTitulo(newMovieName);
+        movie.setTitle(newMovieName);
     }
 
     /**

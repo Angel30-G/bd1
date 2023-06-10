@@ -18,7 +18,6 @@ public class UpdateReviewCommand implements Runnable {
         
         var category = blockbusterReview.getReviewRating(reviewOld);
         
-
         blockbusterReview.editReviewRating(reviewOld, reviewNew);
 
         System.out.println("New Category: " + reviewNew + " was modified successfully");

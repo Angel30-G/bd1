@@ -24,7 +24,7 @@ public class GetByTittleCommand implements Runnable {
         var blockbuster = new Application().getBlockbuster();
         var movie = blockbuster.getMovie(title);
 
-        System.out.println("Id " + movie.getId() + ", Titulo " + movie.getTitulo());
+        System.out.println("Id " + movie.getId() + ", Titulo " + movie.getTitle());
 
     }
 }

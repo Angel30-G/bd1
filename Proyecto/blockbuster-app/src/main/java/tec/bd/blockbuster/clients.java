@@ -12,18 +12,15 @@ import java.util.Locale;
  * @author pc
  */
 public class clients {
-    
     private int id;
     
-    private String nombre;
+    private String name;
     
-    private String apellido;
+    private String lastname;
     
-    private int cedula;
+    private int phone_number;
     
-    private int telefono;
-    
-    private String direccion;
+    private String email;
 
     public int getId() {
         return id;
@@ -33,45 +30,39 @@ public class clients {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public int getCedula() {
-        return cedula;
+    public int getPhone_number() {
+        return phone_number;
     }
 
-    public void setCedula(int cedula) {
-        this.cedula = cedula;
+    public void setPhone_number(int phone_number) {
+        this.phone_number = phone_number;
     }
 
-    public int getTelefono() {
-        return telefono;
+    public String getEmail() {
+        return email;
     }
 
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
+    public void setEmail(String email) {
+        this.email = email;
     }
+    
 
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
+    
     
 }

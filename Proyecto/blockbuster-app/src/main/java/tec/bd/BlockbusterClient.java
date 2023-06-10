@@ -57,7 +57,7 @@ public class BlockbusterClient {
 
     public void editClientName(String currentClientName, String newClientName) {
         var client = this.getClient(currentClientName);
-        client.setNombre(newClientName);
+        client.setName(newClientName);
     }
 
     /**
